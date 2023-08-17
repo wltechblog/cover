@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"image/jpeg"
 	"image/png"
 	"log"
 	"os"
@@ -28,7 +29,16 @@ func main() {
 
 	d, err := png.Decode(in)
 	if err != nil {
-		log.Fatal(err)
+		in.Close()
+
+		in, err := os.Open(filename)
+		if err != nil {
+			log.Fatal(err)
+		}
+		d, err = jpeg.Decode(in)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	dstImageFill := imaging.Fill(d, width, height, imaging.Center, imaging.Lanczos)
