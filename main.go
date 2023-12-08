@@ -52,9 +52,10 @@ func main() {
 	if fit {
 		bounds := d.Bounds()
 
-		imageaspect := bounds.Dy() / bounds.Dx()
-		fitaspect := height / width
-		if imageaspect > fitaspect {
+		imageaspect := float64(bounds.Dy()) / float64(bounds.Dx())
+		fitaspect := float64(height) / float64(width)
+		log.Printf("imageaspect is %f, fitaspect is %f", imageaspect, fitaspect)
+		if imageaspect < fitaspect {
 			d = resize.Resize(uint(width), 0, d, resize.Lanczos3)
 		} else {
 			d = resize.Resize(0, uint(height), d, resize.Lanczos3)
